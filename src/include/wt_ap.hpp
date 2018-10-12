@@ -22,9 +22,9 @@
 #ifndef INCLUDED_SDSL_WT_AP
 #define INCLUDED_SDSL_WT_AP
 
-#include <sdsl/bit_vectors.hpp>
-#include <sdsl/int_vector.hpp>
-#include <sdsl/vectors.hpp>
+#include "bit_vectors.hpp"
+#include "int_vector.hpp"
+#include "vectors.hpp"
 
 //! Namespace for the succinct data structure library.
 namespace sdsl
