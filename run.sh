@@ -109,7 +109,7 @@ while [ "$1" != "" ]; do
             exit
             ;;
         * )                     printf -- "$optionInfo"
-            exit 
+            exit
     esac
     shift
 done
@@ -151,14 +151,14 @@ fi
 if [ -n "$files" ]; then
     inputFiles=""
     inputFileArray=()
-    while read line; do    
+    while read line; do
         inputFiles+="$inputFiles $line"
         inputFileArray+=($line)
     done < $files
 fi
 
 
-## For multiple genomes, we concatenate all of them to one file. 
+## For multiple genomes, we concatenate all of them to one file.
 ## to empty the contents of the file
 > $multipleGenomeFile
 
@@ -171,7 +171,7 @@ referenceGenome=${referenceGenomeArray[0]}
 ## Suffix Tree for simple exact matching
 echo "Running C++ Suffix Tree"
 cd src
-make 
+make
 if [ $? -ne 0 ]; then
     echo "Compilation failed.  Please check that sdsl is in your include path and in your library path."
     cd ..
@@ -213,7 +213,7 @@ if [ "$bwaskip" = 0 ]; then
     echo "BWA - "
     # Index the reference file
     bwa index $referenceGenome > $tmpoutfile 2> $tmperrorfile
-    
+
     if [ "$?" = 0 ]; then
 	cat $tmpoutfile
     else
@@ -222,7 +222,7 @@ if [ "$bwaskip" = 0 ]; then
 	printf "${NC}"
         sane_quit
     fi
-    
+
     # align the input files with the reference file
     bwaOutput=""
     echo "%align" > $tmpbwafile
@@ -251,7 +251,7 @@ if [ "$bwaskip" = 0 ]; then
 	    printf "${NC}"
 	fi
     done
-    
+
     paste $alignment $tmpbwafile > $tmpoutfile
     cat $tmpoutfile > $alignment
     rm -f $tmpbwafile
@@ -262,8 +262,6 @@ fi
 # USE KMC FOR BETTER PERFOMANCE
 cp $alignment old-alignment.txt
 
-cd ${SCRIPT_PATH}/src
-make
 cd ${SCRIPT_PATH}
 
 tmpKmerOut="/tmp/tmpkmerout.txt"
@@ -271,15 +269,15 @@ if [ "$kmerskip" = 0 ]; then
     echo "Kmer size = $kmersize"
     echo "Abundance Min = $abundancemin"
 
-    ${SCRIPT_PATH}/src/KMC/bin/kmc -t4 -ci1 -k$kmersize -fm $multipleGenomeFile mg /tmp
+    kmc -t4 -ci1 -k$kmersize -fm $multipleGenomeFile mg /tmp
 
     echo -e "recall\tprecision" > $tmpKmerOut
     for i in "${inputFileArray[@]}"
     do
-        ${SCRIPT_PATH}/src/KMC/bin/kmc -t4 -ci$abundancemin -k$kmersize -fm $i $i.kmc /tmp
-        ${SCRIPT_PATH}/src/KMC/bin/kmc_tools simple mg -ci1 $i.kmc -ci1 intersect $i.tp -ci1
-        ${SCRIPT_PATH}/src/KMC/bin/kmc_tools simple mg -ci1 $i.kmc -ci1 kmers_subtract $i.fn -ci1
-        ${SCRIPT_PATH}/src/KMC/bin/kmc_tools simple mg -ci1 $i.kmc -ci1 reverse_kmers_subtract $i.fp -ci1
+        kmc -t4 -ci$abundancemin -k$kmersize -fm $i $i.kmc /tmp
+        kmc_tools simple mg -ci1 $i.kmc -ci1 intersect $i.tp -ci1
+        kmc_tools simple mg -ci1 $i.kmc -ci1 kmers_subtract $i.fn -ci1
+        kmc_tools simple mg -ci1 $i.kmc -ci1 reverse_kmers_subtract $i.fp -ci1
         tp=$(./src/count_kmers_kmc $i.tp)
         fn=$(./src/count_kmers_kmc $i.fn)
         fp=$(./src/count_kmers_kmc $i.fp)
