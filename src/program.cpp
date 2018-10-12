@@ -70,7 +70,6 @@ int main(int argc, char*argv[]) {
 
     sdsl::csa_wt<> fm_index;
     sdsl::construct_im(fm_index, reference, 1);
-    // cout << "'si' occurs " << sdsl::count(fm_index,"si") << " times.\n";
     cout << "Suffix array created\n";
 
     
@@ -126,7 +125,7 @@ int main(int argc, char*argv[]) {
 
         int commonContigsCounter=0;
 
-        for(int i=0; i<contigs.size();i++){
+        for(int i=0; i<contigs.size(); i++){
         	if(sdsl::count(fm_index,contigs[i]) >= 1 || sdsl::count(fm_index,revComp(contigs[i])) >= 1){
         		commonContigsCounter++;
         		// out << contigs[i] << delim << "1" << endl;
