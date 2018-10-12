@@ -9,7 +9,7 @@ all: program
 
 
 .o:
-	$(CXX) -c $(CXXFLAGS) $(INCLUDES) $< -o $@
+	$(GXX) -c $(CXXFLAGS) $(INCLUDES) $< -o $@
 
 program: program.o
 	${GXX}  $^ ${LDFLAGS} -fPIC -o $@ ${LIBS}
