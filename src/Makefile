@@ -1,7 +1,8 @@
 all: program count_kmers
 
 program: program.cpp
-	${GXX}  -std=c++11 -DNDEBUG -O3  $^ -I${PREFIX}/include -L${PREFIX}/lib -o program -lsdsl -ldivsufsort -ldivsufsort64
+	${GXX}    ${LDFLAGS} ${CXXFLAGS} $^ -o program -lsdsl -ldivsufsort -ldivsufsort64
+	# ${GXX}  -std=c++11 -DNDEBUG -O3  $^ -I${PREFIX}/include -L${PREFIX}/lib -o program -lsdsl -ldivsufsort -ldivsufsort64
 
 # g++ -std=c++11 -DNDEBUG -O3 -I$(CPATH) $^ -o program -L$(LIBRARY_PATH) -lsdsl -ldivsufsort -ldivsufsort64
 
