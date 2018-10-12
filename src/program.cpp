@@ -1,4 +1,4 @@
-#include "include/suffix_arrays.hpp"
+#include "suffix_arrays.hpp"
 #include <fstream>
 #include <string>
 #include <algorithm>
