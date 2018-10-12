@@ -22,30 +22,13 @@ This pipeline does the following things -
 --->
 
 
-# Release Date
-### TBD
 
 # Prerequisites
 
 1. Python 2.7 - Should be present in the PATH variable
-
-
 2. BWA - version used bwa-0.7.15-r1140, should be present in the PATH variable
-
-		# Install using homebrew
-		brew install bwa
-
 3. KMC - version used 3.1.1, should be present in the PATH variable
-
-		# KMC is provided as a submodule of ContigValidator
-        # Move to the src/KMC folder and run make
-		cd <ContigValidatorPath>/src/KMC
-        make
-
 4. SAMTOOLS - version used 1.3.1, should be present in the PATH variable
-
-		# Install using homebrew
-		brew install samtools
 
 5. [SDSL-lite](https://github.com/simongog/sdsl-lite) - version used 2.0.  Headers should be present in the `CPATH` variable and libraries should be present in the `LIBRARY_PATH` variable.
 
