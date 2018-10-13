@@ -1,6 +1,6 @@
 CXX ?= c++
 GXX ?= g++
-CXXFLAGS = -std=c++11 -DNDEBUG -O3  -I./include 
+CXXFLAGS = -std=c++11 -fPIC -DNDEBUG -O3  -I./include 
 LDFLAGS = -L./lib
 LIBS = -lsdsl -ldivsufsort -ldivsufsort64
 INCLUDES = 
