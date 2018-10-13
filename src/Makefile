@@ -1,7 +1,7 @@
 CXX ?= c++
 GXX ?= g++
-CXXFLAGS ?= -std=c++11 -DNDEBUG -O3  -I/home/pzm11/include 
-LDFLAGS ?= -L/home/pzm11/lib
+CXXFLAGS = -std=c++11 -DNDEBUG -O3  -I./include 
+LDFLAGS = -L./lib
 LIBS = -lsdsl -ldivsufsort -ldivsufsort64
 INCLUDES = 
 
