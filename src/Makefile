@@ -1,3 +1,4 @@
+CXX ?= c++
 GXX ?= g++
 CXXFLAGS ?= -std=c++11 -DNDEBUG -O3  -I/home/pzm11/include 
 LDFLAGS ?= -L/home/pzm11/lib
@@ -8,10 +9,10 @@ all: program
 #all: program count_kmers
 
 program.o: program.cpp
-	$(GXX) -c $(CXXFLAGS) $(INCLUDES) $< -o $@ 
+	$(CXX) -c $(CXXFLAGS) $(INCLUDES) $< -o $@ 
 
 program: program.o
-	${GXX}  $^ ${LDFLAGS} -fPIC -o $@ ${LIBS}
+	${CXX}  $^ ${LDFLAGS} -fPIC -o $@ ${LIBS}
 
 	#${GXX}  -std=c++11 -DNDEBUG -O3  $^ -I${PREFIX}/include -L${PREFIX}/lib -fPIC -o program -lsdsl -ldivsufsort -ldivsufsort64
 	#${GXX}    ${LDFLAGS} ${CXXFLAGS} $^ -o program -lsdsl -ldivsufsort -ldivsufsort64
