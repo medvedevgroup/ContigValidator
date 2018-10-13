@@ -7,9 +7,8 @@ INCLUDES =
 all: program 
 #all: program count_kmers
 
-
-.o:
-	$(GXX) -c $(CXXFLAGS) $(INCLUDES) $< -o $@
+program.o: program.cpp
+	$(GXX) -c $(CXXFLAGS) $(INCLUDES) $< -o $@ 
 
 program: program.o
 	${GXX}  $^ ${LDFLAGS} -fPIC -o $@ ${LIBS}
