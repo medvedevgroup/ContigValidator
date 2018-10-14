@@ -1,9 +1,8 @@
-configfile: "sampleconfig.yaml"
-
 KMERSIZE      = config["KMERSIZE"]
 ABUNDANCE_MIN = config["ABUNDANCE_MIN"]
 TMP_DIR       = config["TMP_DIR"]
 OUT_DIR       = config["OUT_DIR"]
+EXACT_ALIGN   = "/home/pzm11/research/software/ContigValidator/src/exactalign"
 
 rule all: 
     input:
@@ -85,14 +84,17 @@ rule intersect_kmers:
         kmc_tools simple cvfiles/refs.fa -ci1 cvfiles/all.{wildcards.contigs} -ci1 intersect cvfiles/tp.{wildcards.contigs} -ci1
         kmc_tools simple cvfiles/refs.fa -ci1 cvfiles/all.{wildcards.contigs} -ci1 kmers_subtract cvfiles/fn.{wildcards.contigs} -ci1
         kmc_tools simple cvfiles/refs.fa -ci1 cvfiles/all.{wildcards.contigs} -ci1 reverse_kmers_subtract cvfiles/fp.{wildcards.contigs} -ci1
-        tp=$(src/count_kmers_kmc cvfiles/tp.{wildcards.contigs})
-        fn=$(src/count_kmers_kmc cvfiles/fn.{wildcards.contigs})
-        fp=$(src/count_kmers_kmc cvfiles/fp.{wildcards.contigs})
+        kmc_dump cvfiles/tp.{wildcards.contigs} cvfiles/temp; tp=`less cvfiles/temp | wc -l`
+        kmc_dump cvfiles/fn.{wildcards.contigs} cvfiles/temp; fn=`less cvfiles/temp | wc -l`
+        kmc_dump cvfiles/fp.{wildcards.contigs} cvfiles/temp; fp=`less cvfiles/temp | wc -l`
         precision=$(bc -l <<< "scale=4; $tp * 100 / ($tp + $fp)")
         recall=$(bc -l <<< "scale=4; $tp * 100 / ($tp + $fn)")
         echo -e "$recall\t$precision" >> cvfiles/{wildcards.contigs}.kmer_results
         """
 
+#        tp=$(/home/pzm11/research/software/ContigValidator/src/count_kmers_kmc cvfiles/tp.{wildcards.contigs})
+#        fn=$(/home/pzm11/research/software/ContigValidator/src/count_kmers_kmc cvfiles/fn.{wildcards.contigs})
+#        fp=$(/home/pzm11/research/software/ContigValidator/src/count_kmers_kmc cvfiles/fp.{wildcards.contigs})
 
 rule bwa_index_ref:
     input:
@@ -135,6 +137,6 @@ rule exact_align:
         "cvfiles/all.exact_align_results.exact"
 
     shell:
-        "src/exactalign cvfiles/refs.fa  cvfiles/all.exact_align_results {input.contig_files}"
+        "{EXACT_ALIGN} cvfiles/refs.fa  cvfiles/all.exact_align_results {input.contig_files}"
 
         
