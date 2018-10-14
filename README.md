@@ -32,7 +32,13 @@ This pipeline does the following things -
 
 5. [SDSL-lite](https://github.com/simongog/sdsl-lite) - version used 2.0.  Headers should be present in the `CPATH` variable and libraries should be present in the `LIBRARY_PATH` variable.
 
+6. snakemake
+
 # Installation
+
+snakemake -s ~/research/software/ContigValidator/Snakefile --configfile sampleconfig.yaml all 
+
+need to unhardcode the path in the Snakefile
 
 Clone the repository using the `--recursive` flag:
 	
