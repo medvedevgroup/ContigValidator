@@ -1,17 +1,15 @@
-CXX ?= c++
 GXX ?= g++
-CXXFLAGS = -std=c++11 -fPIC -DNDEBUG -O3  -I./include 
-LDFLAGS = -L./lib
+CXXFLAGS ?= -std=c++11 -fPIC -DNDEBUG -O3  
+#LDFLAGS ?= -L./lib
 LIBS = -lsdsl -ldivsufsort -ldivsufsort64
-INCLUDES = 
 
 all: exactalign 
 
 exactalign.o: exactalign.cpp
-	$(CXX) -c $(CXXFLAGS) $(INCLUDES) $< -o $@ 
+	$(CXX) -c $(CXXFLAGS) -I./include $< -o $@ 
 
 exactalign: exactalign.o
-	${CXX}  $^ ${LDFLAGS} -fPIC -o $@ ${LIBS}
+	${CXX}  $^ ${LDFLAGS} -o $@ ${LIBS}
 
 
 #${GXX}  -std=c++11 -DNDEBUG -O3  $^ -I${PREFIX}/include -L${PREFIX}/lib -fPIC -o program -lsdsl -ldivsufsort -ldivsufsort64
